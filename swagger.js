@@ -11,7 +11,7 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: 'https://backend-prm.vercel.app/',
+            url: 'https://mobi-prm.vercel.app/',
         },
     ],
 };
