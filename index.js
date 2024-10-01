@@ -53,6 +53,14 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Something went wrong!' });
 });
 
+// Server setup
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
+}).on('error', (err) => {
+    console.error('Error starting server:', err);
+});
+
+// Global error handling
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
 });
