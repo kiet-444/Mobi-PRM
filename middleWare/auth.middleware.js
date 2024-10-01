@@ -13,6 +13,12 @@ const verifyToken = (req, res, next) => {
     });
 };
 
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log lỗi vào console
+    res.status(500).send('Something broke!'); // Gửi phản hồi cho client
+});
+
+
 const isAdmin = (req, res, next) => {
     if (req.userRole !== 'admin') return res.status(403).json({ message: 'Access denied' });
     next();
