@@ -14,3 +14,4 @@ router.delete('/delete/:id', verifyToken, isAdmin, UserController.deleteUser);
 router.get('/all', verifyToken, isAdmin, UserController.getAllUsers);
 
 module.exports = router;
+//nms
