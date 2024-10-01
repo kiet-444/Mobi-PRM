@@ -25,7 +25,7 @@ const YOUR_DOMAIN = process.env.DOMAIN || 'http://localhost:3000';
 
 // Middleware setup
 app.use(cors({
-    origin: 'https://backend-prm.vercel.app/',
+    origin: 'http://localhost:3000',
     credentials: true,
 }));
 
