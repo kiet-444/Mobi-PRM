@@ -50,9 +50,9 @@ app.use('/api/request', AdoptionRequestRoute);
 app.use('/api/cart-pets', CartPetRoute);
 
 
-// Connect to MongoDB
 connectDB()
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
+ 
