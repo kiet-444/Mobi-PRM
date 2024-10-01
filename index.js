@@ -3,7 +3,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 const { connectDB } = require('./config/connectDB');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
@@ -15,7 +14,6 @@ const AuthRoute = require('./routes/authRouter');
 const UserRoute = require('./routes/userRouter');
 const AdoptionRequestRoute = require('./routes/adoptionRequestRouter');
 const CartPetRoute = require('./routes/cartPetRouter');
-
 
 dotenv.config();
 
@@ -30,13 +28,10 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
-
 app.use(upload.any());
 
-const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.js"
-app.use('/api-', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-    customCss:
-        '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.css";
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
     customCssUrl: CSS_URL,
 }));
 
@@ -49,9 +44,14 @@ app.use('/api/users', UserRoute);
 app.use('/api/request', AdoptionRequestRoute);
 app.use('/api/cart-pets', CartPetRoute);
 
-
 // Connect to MongoDB
-connectDB()
+connectDB();
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Something went wrong!' });
+});
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
