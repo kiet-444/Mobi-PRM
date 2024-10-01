@@ -234,3 +234,4 @@ router.get('/query', NewsController.getNewsByQuery);
 router.get('/:id', NewsController.getNewsDetail);
 
 module.exports = router;
+ //add your path
