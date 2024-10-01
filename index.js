@@ -49,6 +49,9 @@ app.use('/api/users', UserRoute);
 app.use('/api/request', AdoptionRequestRoute);
 app.use('/api/cart-pets', CartPetRoute);
 
+app.get('/test', (req, res) => {
+    res.send('Test route is working!');
+});
 
 connectDB()
 
