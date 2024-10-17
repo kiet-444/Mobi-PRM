@@ -41,7 +41,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 }));
 
 
-// Define routes
 app.use('/api', MediaRoute);
 app.use('/api/pets', PetRoute);
 app.use('/api/news', NewsRoute);

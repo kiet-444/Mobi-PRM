@@ -1,4 +1,4 @@
-const cloudinary = require('cloudinary').v2; // Adjust the path if necessary
+const cloudinary = require('../config/cloudinary.config');
 const { PassThrough } = require('stream');
 const Media = require('../models/Media');
 
