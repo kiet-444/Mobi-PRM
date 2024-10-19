@@ -13,6 +13,7 @@ const PetController = require('../controllers/Pet.controllers');
  *         - sex
  *         - age
  *         - species
+ *         - coatColor
  *         - breed
  *         - vaccinated
  *         - healthStatus
