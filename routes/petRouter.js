@@ -12,7 +12,6 @@ const PetController = require('../controllers/Pet.controllers');
  *         - name
  *         - sex
  *         - age
- *         - coatColor
  *         - species
  *         - breed
  *         - vaccinated
@@ -46,6 +45,9 @@ const PetController = require('../controllers/Pet.controllers');
  *       example:
  *         name: "Fluffy"
  *         sex: "Female"
+ *         age: 5
+ *         species: "Cat"
+ *         coatColor: "Black"
  *         breed: "Labrador"
  *         vaccinated: true
  *         healthStatus: "Healthy"
@@ -198,30 +200,20 @@ router.get('/pets/:id', PetController.getPetDetail);
  *           type: string
  *         description: The name of the pet
  *       - in: query
- *         name: sex
+ *         name: breed
  *         schema:
  *           type: string
- *         description: The sex of the pet
- *      - in: query
- *         name: age
- *         schema:
- *           type: number
- *         description: The age of the pet
+ *         description: The breed of the pet
  *       - in: query
- *         name: coatColor
- *         schema:
- *           type: string
- *         description: The coat color of the pet
- * *      - in: query
  *         name: species
  *         schema:
  *           type: string
  *         description: The species of the pet
  *       - in: query
- *         name: breed
+ *         name: age
  *         schema:
- *           type: string
- *         description: The breed of the pet
+ *           type: number
+ *         description: The age of the pet
  *       - in: query
  *         name: vaccinated
  *         schema:
