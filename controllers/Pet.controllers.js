@@ -67,9 +67,9 @@ const deletePet = async (req, res) => {
 
 const getPetDetail = async (req, res) => {
     try {
-        const { id } = req.body
+        const { id } = req.params;
 
-        const pet = await Pet.findById({_id:id});
+        const pet = await Pet.findById({ _id: id });
         if (!pet) {
             return res.status(404).json({ message: 'Pet not found' });
         }
