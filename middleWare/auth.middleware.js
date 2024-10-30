@@ -29,6 +29,22 @@ const isAdmin = (req, res, next) => {
     next(); // Proceed to the next middleware or route handler
 };
 
+const isShelterStaff = (req, res, next) => {
+    // Check if the user's role is 'shelter_staff'
+    if (req.userRole !== 'shelter_staff') {
+        return res.status(403).json({ message: 'Access denied' });
+    }
+    next(); // Proceed to the next middleware or route handler
+};
+
+const isAdopers = (req, res, next) => {
+    // Check if the user's role is 'adopter'
+    if (req.userRole !== 'adopter') {
+        return res.status(403).json({ message: 'Access denied' });
+    }
+    next(); // Proceed to the next middleware or route handler
+};
+
 // Middleware to check if the user is either the user making the request or an admin
 const isUserOrAdmin = (req, res, next) => {
     // Check if the user is an admin or if the user ID matches the requested user ID
@@ -38,4 +54,4 @@ const isUserOrAdmin = (req, res, next) => {
     next(); // Proceed to the next middleware or route handler
 };
 
-module.exports = { verifyToken, isAdmin, isUserOrAdmin };
+module.exports = { verifyToken, isAdmin, isUserOrAdmin, isShelterStaff, isAdopers };
