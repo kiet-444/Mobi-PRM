@@ -123,27 +123,41 @@ const getAllPets = async (req, res) => {
 // Get pets by query
 const getPetsByQuery = async (req, res) => {
     try {
-        const { search, species, coatColor, sex, page = 1, limit = 15 } = req.query;
-        
+        const { name, species, age, vaccinated, healthStatus, page = 1, limit = 15 } = req.query;
+
+        // Khởi tạo query mặc định để tìm kiếm những pets không bị xóa (deleted: false)
         const query = { deleted: false };
         const skip = (page - 1) * limit;
 
-        if (search) {
-            query.name = { $regex: search, $options: "i" };
+        // Chỉ thêm điều kiện vào query nếu tham số đó tồn tại
+        if (name) {
+            query.name = { $regex: name, $options: "i" }; // Tìm kiếm không phân biệt hoa thường
         }
-        
-        if (species) query.species = { $regex: species, $options: "i" };
-        if (coatColor) query.coatColor = { $regex: coatColor, $options: "i" };
-        if (sex) query.sex = { $regex: sex, $options: "i" };
 
-        console.log(query);
+        if (species) {
+            query.species = { $regex: species, $options: "i" };
+        }
+
+        if (age) {
+            query.age = Number(age); // Ép age thành số nguyên
+        }
+
+        if (vaccinated) {
+            query.vaccinated = vaccinated === 'true'; // Convert vaccinated thành boolean
+        }
+
+        if (healthStatus) {
+            query.healthStatus = { $regex: healthStatus, $options: "i" };
+        }
+
+        console.log("Generated query:", query);
 
         const pets = await Pet.find(query)
             .skip(skip)
             .limit(Number(limit));
-        
+
         const totalPets = await Pet.countDocuments(query);
-        
+
         res.status(200).json({
             data: pets,
             currentPage: page,
@@ -151,7 +165,8 @@ const getPetsByQuery = async (req, res) => {
             totalPets
         });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to get pets', error });
+        console.error("Error fetching pets:", error);
+        res.status(500).json({ message: 'Failed to get pets', error: error.message });
     }
 };
 
