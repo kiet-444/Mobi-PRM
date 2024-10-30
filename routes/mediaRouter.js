@@ -81,4 +81,6 @@ const MediaController = require('../controllers/Media.controllers');
  */
 router.post('/media', MediaController.upload);
 
+router.delete('/media/:id', MediaController.deleteMedia);
+
 module.exports = router;
