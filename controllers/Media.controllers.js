@@ -1,4 +1,4 @@
-const cloudinary = require('../config/cloudinary.config');
+const cloudinary = require('../config/cloudinary.config'); // Adjust the path if necessary
 const { PassThrough } = require('stream');
 const Media = require('../models/Media');
 
@@ -47,6 +47,20 @@ const upload = async (req, res) => {
     }
 };
 
+const deleteMedia = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const media = await Media.findByIdAndDelete({ _id: id });
+        if (!media) {
+            return res.status(404).json({ message: 'Media not found' });
+        }
+        res.status(200).json({ message: 'Media deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to delete media', error });
+    }
+};
+
 module.exports = {
-    upload
+    upload, 
+    deleteMedia
 };
