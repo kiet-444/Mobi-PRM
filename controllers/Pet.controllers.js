@@ -131,7 +131,7 @@ const getPetsByQuery = async (req, res) => {
 
         // Chỉ thêm điều kiện vào query nếu tham số đó tồn tại
         if (name) {
-            query.name = { $regex: name, $options: "i" }; // Tìm kiếm không phân biệt hoa thường
+            query.name = { $regex: name, $options: "i" }; 
         }
 
         if (species) {

@@ -7,8 +7,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+
 const upload = multer();
 const MediaRoute = require('./routes/mediaRouter');
+
 const PetRoute = require('./routes/petRouter');
 const NewsRoute = require('./routes/newsRouter');
 const AuthRoute = require('./routes/authRouter');
