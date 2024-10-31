@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    role: { type: String, enum: ['user', 'admin', 'shelter_staff', 'adopter'], default: 'user' },
     firstLogin: {
         type: Boolean, default: function () {
             return this.role === 'admin' ? true : undefined;

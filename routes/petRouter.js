@@ -178,7 +178,7 @@ router.get('/all', PetController.getAllPets);
 
 /**
  * @swagger
- * /api/pets/query:
+ * /api/pets:
  *   get:
  *     summary: Get pets by query
  *     tags: [Pet]
@@ -225,7 +225,7 @@ router.get('/all', PetController.getAllPets);
  *       500:
  *         description: Failed to get pets
  */
-router.get('/:id', PetController.getPetsByQuery);
+router.get('/', PetController.getPetsByQuery);
 
 
 /**
