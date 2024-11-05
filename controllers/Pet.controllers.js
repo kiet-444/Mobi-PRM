@@ -123,7 +123,7 @@ const getAllPets = async (req, res) => {
 // Get pets by query
 const getPetsByQuery = async (req, res) => {
     try {
-        const { name, species, age, vaccinated, healthStatus, page = 1, limit = 15 } = req.query;
+        const { name, species, age, vaccinated, breed, healthStatus, page = 1, limit = 15 } = req.query;
 
         // Khởi tạo query mặc định để tìm kiếm những pets không bị xóa (deleted: false)
         const query = { deleted: false };
@@ -144,6 +144,10 @@ const getPetsByQuery = async (req, res) => {
 
         if (vaccinated) {
             query.vaccinated = vaccinated === 'true'; // Convert vaccinated thành boolean
+        }
+
+        if (breed) {
+            query.breed = { $regex: breed, $options: "i" };
         }
 
         if (healthStatus) {
