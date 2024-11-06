@@ -49,7 +49,7 @@ const { verifyToken, isAdmin, isUserOrAdmin } = require('../middleWare/auth.midd
 // Update user profile (accessible by user or admin)
 /**
  * @swagger
- * /api/auth/update/{id}:
+ * /api/users/update/{id}:
  *   put:
  *     summary: Update user profile
  *     tags: [Auth]
@@ -95,7 +95,7 @@ router.put('/update/:id', verifyToken, isUserOrAdmin, UserController.updateUser)
 // Delete user (admin only)
 /**
  * @swagger
- * /api/auth/delete/{id}:
+ * /api/users/delete/{id}:
  *   delete:
  *     summary: Delete a user
  *     tags: [Auth]
@@ -121,7 +121,7 @@ router.delete('/delete/:id', verifyToken, isAdmin, UserController.deleteUser);
 // Get all users (admin only)
 /**
  * @swagger
- * /api/auth/all:
+ * /api/users/all:
  *   get:
  *     summary: Get all users
  *     tags: [Auth]
@@ -136,5 +136,33 @@ router.delete('/delete/:id', verifyToken, isAdmin, UserController.deleteUser);
  *                 $ref: '#/components/schemas/User'
  */
 router.get('/all', verifyToken, isAdmin, UserController.getAllUsers);
+
+// Get user by ID
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get a user
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the user
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Failed to get user
+ * */
+router.get('/:id', verifyToken, isUserOrAdmin, UserController.getUsersByID);
 
 module.exports = router;
