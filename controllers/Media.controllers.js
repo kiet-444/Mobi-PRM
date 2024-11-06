@@ -2,6 +2,7 @@ const cloudinary = require('../config/cloudinary.config'); // Adjust the path if
 const { PassThrough } = require('stream');
 const Media = require('../models/Media');
 
+
 const upload = async (req, res) => {
     try {
         if (!req.files || req.files.length === 0) {
@@ -37,6 +38,7 @@ const upload = async (req, res) => {
                     });
                 } catch (dbError) {
                     console.error('Error saving media to database:', dbError);
+
                     return res.status(500).json({ error: 'Error saving media to database' });
                 }
             }
@@ -47,18 +49,33 @@ const upload = async (req, res) => {
     }
 };
 
+
+
 const deleteMedia = async (req, res) => {
     try {
         const { id } = req.params;
-        const media = await Media.findByIdAndDelete({ _id: id });
-        if (!media) {
-            return res.status(404).json({ message: 'Media not found' });
-        }
-        res.status(200).json({ message: 'Media deleted successfully' });
+
+        // Xóa media từ Cloudinary trước
+        cloudinary.uploader.destroy(id, async (error, result) => {
+            if (error) {
+                return res.status(500).json({ message: 'Failed to delete from Cloudinary', error });
+            }
+
+            // Xóa media khỏi cơ sở dữ liệu MongoDB
+            const media = await Media.findOneAndDelete({ id: id });
+
+            if (!media) {
+                return res.status(404).json({ message: 'Media not found in database' });
+            }
+
+            res.status(200).json({ message: 'Media deleted successfully from Cloudinary and database' });
+        });
     } catch (error) {
+        console.error('Error deleting media:', error);
         res.status(500).json({ message: 'Failed to delete media', error });
     }
 };
+
 
 module.exports = {
     upload, 
