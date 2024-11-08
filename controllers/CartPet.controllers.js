@@ -2,35 +2,33 @@ const CartPet = require('../models/CartPet');
 const Pet = require('../models/Pet');
 
 // Add a new pet to the cart
+// 
+
 const addPetToCart = async (req, res) => {
     try {
-        const { petId, quantity } = req.body;
-        const pet = await Pet.findById({ _id: petId });
+        const { petId } = req.body;
+        const pet = await Pet.findById({_id: petId}); // No need for { _id: petId }, simply use petId
         if (!pet) {
             return res.status(404).json({ message: 'Pet not found' });
         }
 
-        if (quantity > pet.quantity) {
-            return res.status(400).json({ message: 'Quantity exceeds available quantity' }); 
-        }
-
-        // Check if the pet is already in the cart
         let cartPet = await CartPet.findOne({ userId: req.userId, petId });
         if (cartPet) {
-            cartPet.quantity += quantity;
+            return res.status(400).json({ message: 'Pet is already in the cart' });
         } else {
             cartPet = new CartPet({
                 userId: req.userId,
-                petId,
-                quantity,
+                petId
             });
         }
+        
         const savedCartPet = await cartPet.save();
         res.status(201).json({ message: 'Pet added to cart successfully', data: savedCartPet });
     } catch (error) {
         res.status(500).json({ message: 'Failed to add pet', error });
     }
 };
+
 
 const getCartPets = async (req, res) => {
     try {
