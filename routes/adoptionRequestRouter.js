@@ -3,15 +3,46 @@ const router = express.Router();
 const AdoptionRequestController = require('../controllers/AdoptionRequest.controllers');
 const { verifyToken, isAdmin } = require('../middleWare/auth.middleware');
 
-
-
-// Create new adoption request
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     AdoptionRequest:
+ *       type: object
+ *       required:
+ *         - petId
+ *         - name
+ *         - address
+ *         - phoneNumber
+ *         - cccd
+ *         - userId
+ *       properties:
+ *         petId:
+ *           type: string
+ *           description: ID of the pet being adopted
+ *         name:
+ *           type: string
+ *           description: Name of the adopter
+ *         address:
+ *           type: string
+ *           description: Address of the adopter
+ *         phoneNumber:
+ *           type: string
+ *           description: Phone number of the adopter
+ *         cccd:
+ *           type: string
+ *           description: National ID number (CCCD)
+ *         status:
+ *           type: string
+ *           description: Status of the adoption request
+ *           enum: ['pending', 'approved', 'rejected']
+ */
 
 /**
  * @swagger
- * /api/adoption-request:
+ * /adoption-request:
  *   post:
- *     summary: Create new adoption request
+ *     summary: Create a new adoption request
  *     tags: [AdoptionRequest]
  *     requestBody:
  *       required: true
@@ -25,23 +56,49 @@ const { verifyToken, isAdmin } = require('../middleWare/auth.middleware');
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/AdoptionRequest'
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *                 data:
+ *                   $ref: '#/components/schemas/AdoptionRequest'
  *       500:
  *         description: Failed to create adoption request
- * 
  */
 router.post('/adoption-request', verifyToken, AdoptionRequestController.createAdoptionRequest);
 
-// Get adoption requests
+/**
+ * @swagger
+ * /adoption-request:
+ *   get:
+ *     summary: Retrieve all adoption requests
+ *     tags: [AdoptionRequest]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved adoption requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/AdoptionRequest'
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       500:
+ *         description: Failed to retrieve adoption requests
+ */
 router.get('/adoption-request', verifyToken, AdoptionRequestController.getAllAdoptionRequest);
-
-// Update status adoption request
 
 /**
  * @swagger
- * /api/adoption-request:
+ * /adoption-request:
  *   patch:
- *     summary: Update status adoption request
+ *     summary: Update the status of an adoption request
  *     tags: [AdoptionRequest]
  *     requestBody:
  *       required: true
@@ -52,16 +109,14 @@ router.get('/adoption-request', verifyToken, AdoptionRequestController.getAllAdo
  *             properties:
  *               id:
  *                 type: string
- *                 description: The ID of the adoption request to update
+ *                 description: ID of the adoption request to update
  *               status:
  *                 type: string
- *                 description: The new status of the adoption request
- *             example:
- *               id: "adoption-request-id"
- *               status: "accepted"
+ *                 description: New status for the adoption request
+ *                 enum: ['pending', 'approved', 'rejected']
  *     responses:
  *       200:
- *         description: Adoption request status updated successfully
+ *         description: Successfully updated the adoption request status
  *         content:
  *           application/json:
  *             schema:
@@ -69,8 +124,12 @@ router.get('/adoption-request', verifyToken, AdoptionRequestController.getAllAdo
  *               properties:
  *                 message:
  *                   type: string
- *                   description: The message of the response
+ *                   description: Success message
+ *                 data:
+ *                   $ref: '#/components/schemas/AdoptionRequest'
+ *       500:
+ *         description: Failed to update the adoption request status
  */
-router.patch('/adoption-request', verifyToken, AdoptionRequestController.updateStatusAdoptionRequest);
+router.patch('/adoption-request', verifyToken, isAdmin, AdoptionRequestController.updateStatusAdoptionRequest);
 
 module.exports = router;
