@@ -72,7 +72,7 @@ router.post('/adoption-request', verifyToken, AdoptionRequestController.createAd
  * @swagger
  * /api/adoption-request:
  *   get:
- *     summary: Retrieve all adoption requests
+ *     summary: Retrieve all adoption requests (Admin can see all, User can see own)
  *     tags: [AdoptionRequest]
  *     responses:
  *       200:
@@ -92,7 +92,10 @@ router.post('/adoption-request', verifyToken, AdoptionRequestController.createAd
  *       500:
  *         description: Failed to retrieve adoption requests
  */
+
 router.get('/adoption-request', verifyToken, AdoptionRequestController.getAllAdoptionRequest);
+
+
 
 /**
  * @swagger
