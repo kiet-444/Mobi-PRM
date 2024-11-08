@@ -16,9 +16,7 @@ const { verifyToken, isAdmin } = require('../middleWare/auth.middleware');
  *         petId:
  *           type: string
  *           description: The ID of the product
- *         quantity:
- *           type: integer
- *           description: The quantity of the product in the cart
+ *         
  *         status:
  *           type: string
  *           description: The status of the cart item
@@ -28,11 +26,10 @@ const { verifyToken, isAdmin } = require('../middleWare/auth.middleware');
  *           description: The date when the item was added to the cart
  *       required:
  *         - petId
- *         - quantity
+ *         
  *       example:
  *         id: 1
  *         petId: 1
- *         quantity: 2
  *         status: pending
  *         addedAt: 2022-01-01T00:00:00.000Z
  */
@@ -96,12 +93,10 @@ const { verifyToken, isAdmin } = require('../middleWare/auth.middleware');
  *               petId:
  *                 type: string
  *                 description: The ID of the product
- *               quantity:
- *                 type: integer
- *                 description: The quantity of the product
+
  *             required:
  *               - petId
- *               - quantity
+ *               
  *     responses:
  *       201:
  *         description: Pet added to cart successfully
