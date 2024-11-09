@@ -32,6 +32,7 @@ const addPetToCart = async (req, res) => {
 
 const getCartPets = async (req, res) => {
     try {
+        console.log(req.userId);
         const cartPets = await CartPet.find({ userId: req.userId }).sort({ addedAt: -1 });
         res.status(200).json({ message: 'Cart pets retrieved successfully', data: cartPets });
     } catch (error) {
