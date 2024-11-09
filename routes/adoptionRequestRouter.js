@@ -40,7 +40,7 @@ const { verifyToken, isAdmin } = require('../middleWare/auth.middleware');
 
 /**
  * @swagger
- * /api/adoption-request:
+ * /api/request/adoption-request:
  *   post:
  *     summary: Create a new adoption request
  *     tags: [AdoptionRequest]
@@ -70,7 +70,7 @@ router.post('/adoption-request', verifyToken, AdoptionRequestController.createAd
 
 /**
  * @swagger
- * /api/adoption-request:
+ * /api/request/adoption-request:
  *   get:
  *     summary: Retrieve all adoption requests (Admin can see all, User can see own)
  *     tags: [AdoptionRequest]
@@ -95,11 +95,9 @@ router.post('/adoption-request', verifyToken, AdoptionRequestController.createAd
 
 router.get('/adoption-request', verifyToken, AdoptionRequestController.getAllAdoptionRequest);
 
-
-
 /**
  * @swagger
- * /api/adoption-request:
+ * /api/request/adoption-request:
  *   patch:
  *     summary: Update the status of an adoption request
  *     tags: [AdoptionRequest]
